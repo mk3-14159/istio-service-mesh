@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: notification-vs
+spec:
+  hosts:
+    - notification
+  http:
+    - route:
+        - destination:
+            port:
+              number: 8001
+            host: notification
+            subset: v1
+          weight: 100
+      # fault:
+      #   abort:
+      #     percentage:
+      #       value: 50
+      #     httpStatus: 400
+      # fault:
+      #   delay:
+      #     percentage:
+      #       value: 70
+      #     fixedDelay: 5s

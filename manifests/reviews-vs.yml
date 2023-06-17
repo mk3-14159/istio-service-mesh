@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: reviews-vs
+spec:
+  hosts:
+    - reviews
+  http:
+    - match:
+      - uri:
+          prefix: "/reviews"
+      route:
+        - destination:
+            port:
+              number: 8004
+            host: reviews
+            subset: v1
+          weight: 85
+        - destination:
+            port:
+              number: 8004
+            host: reviews
+            subset: v2
+          weight: 10
+        - destination:
+            port:
+              number: 8004
+            host: reviews
+            subset: v3
+          weight: 5

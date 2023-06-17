@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: performance-vs
+spec:
+  hosts:
+    - performance
+  http:
+    - match:
+        - headers:
+            position:
+              exact: manager
+        - headers:
+            position:
+              exact: director
+        - headers:
+            position:
+              exact: ceo
+      route:
+        - destination:
+            port:
+              number: 8003
+            host: performance
+            subset: v1
+          weight: 100

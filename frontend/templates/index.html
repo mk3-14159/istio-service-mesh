@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block details %}
+<div class="col-md-6">
+    <h2>Employee Details</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in details %}
+            <tr>
+                <th scope="row">{{ detail['id'] }}</th>
+                <td>{{ detail['name'] }}</td>
+                <td>{{ detail['email'] }}</td>
+                <td>{{ detail['country'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block notification %}
+<div class="col-md-6">
+    <h2>Notifications</h2>
+    <div class="list-group w-auto">
+        {% for notification in notifications %}
+        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
+                class="rounded-circle flex-shrink-0">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0">{{ notification['name'] }}</h6>
+                    <p class="mb-0 opacity-75">{{ notification['message'] }}</p>
+                </div>
+                <small class="opacity-50 text-nowrap">now</small>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block performance %}
+<div class="col-md-6">
+    <h2>Performance</h2>
+    {% if eligible_to_view_performance %}
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for performance in performances %}
+                <tr>
+                    <th scope="row">{{ performance['id'] }}</th>
+                    <td>{{ performance['name'] }}</td>
+                    <td>{{ performance['performance_feedback'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You are not eligible to view it</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block reviews %}
+    <div class="col-md-6">
+        <h1>Reviews</h1>
+        <div class="list-group w-auto">
+            {% for review in reviews %}
+            <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
+                    class="rounded-circle flex-shrink-0">
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                    <div>
+                        <h6 class="mb-0">{{ review['name'] }}</h6>
+                        <!-- text-primary, text-success, text-danger -->
+                        <p class="mb-0 opacity-75 {{ review['color-css'] }}">
+                            {% for num in range(review['stars']) %}
+                                <i class="bi bi-star"></i>
+                            {% endfor %}
+                        </p>                    
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    
+    </div>
+{% endblock %}

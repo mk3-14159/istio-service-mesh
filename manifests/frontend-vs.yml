@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontend-vs
+spec:
+  hosts:
+    - "kc.employee.com"
+  gateways:
+    - employeemng-gateway
+  http:
+    - match:
+        - uri:
+            exact: /
+        - uri:
+            exact: /home
+        # if do not setup /employees endpoint, it won't be able to send the request to that /employees endpoint
+      route:
+        - destination:
+            port:
+              number: 5000
+            host: frontend
+            subset: v1
+          weight: 100
+      # timeout: 3s

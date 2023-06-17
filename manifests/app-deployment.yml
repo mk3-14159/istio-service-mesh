@@ -1,0 +1,189 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: details
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: details
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: details
+        version: v1
+    spec:
+      containers:
+      - name: details
+        image: karchunt/details:latest
+        ports:
+        - containerPort: 8002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: notification
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: notification
+        version: v1
+    spec:
+      containers:
+      - name: notification
+        image: karchunt/notification:latest
+        ports:
+        - containerPort: 8001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: performance
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: performance
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: performance
+        version: v1
+    spec:
+      containers:
+      - name: performance
+        image: karchunt/performance:latest
+        ports:
+        - containerPort: 8003
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v1
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: reviews
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v1
+    spec:
+      containers:
+      - name: reviews-v1
+        image: karchunt/reviews:v1
+        ports:
+        - containerPort: 8004
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v2
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: reviews
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v2
+    spec:
+      containers:
+      - name: reviews-v2
+        image: karchunt/reviews:v2
+        ports:
+        - containerPort: 8004
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v3
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: reviews
+      version: v3
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v3
+    spec:
+      containers:
+      - name: reviews-v3
+        image: karchunt/reviews:v3
+        ports:
+        - containerPort: 8004
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: frontend
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: frontend
+        version: v1
+    spec:
+      containers:
+      - name: frontend
+        image: karchunt/frontend:latest
+        ports:
+        - containerPort: 5000
+        env:
+          - name: nspace
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: NOTIFICATION_SERVICE_ENDPOINT
+            value: "notification.$(nspace).svc.cluster.local"
+          - name: NOTIFICATION_SERVICE_PORT
+            value: '8001'
+          - name: DETAILS_SERVICE_ENDPOINT
+            value: "details.$(nspace).svc.cluster.local"
+          - name: DETAILS_SERVICE_PORT
+            value: '8002'
+          - name: PERFORMANCE_SERVICE_ENDPOINT
+            value: "performance.$(nspace).svc.cluster.local"
+          - name: PERFORMANCE_SERVICE_PORT
+            value: '8003'
+          - name: REVIEWS_SERVICE_ENDPOINT
+            value: "reviews.$(nspace).svc.cluster.local"
+          - name: REVIEWS_SERVICE_PORT
+            value: '8004'
