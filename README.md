@@ -61,7 +61,7 @@ But, it also comes with some challenges and complexity when having many microser
 * [Docker](https://www.docker.com/)
 * [Dockerhub](https://hub.docker.com/)
 * [Kubernetes](https://kubernetes.io/)
-  * [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+  * [k3s](https://k3s.io/)
 * [Istio](https://istio.io/)
 
 
