@@ -118,8 +118,8 @@ You can follow this sequence: `default -> delay -> abort -> circuit-breaking`
    # circuit breaking
    hey -n 100 -c 50 -m GET -H "Host: kc.employee.com" -host "kc.employee.com" http://192.168.122.69:30282/home
    ```
-    - If got proxy, remember to bypass it through `--noproxy '*'`
-    - No need to register your IP in `/etc/hosts` file
+    - If a proxy exists, remember to bypass it through `--noproxy '*'`
+    - There will be no need to register your IP in `/etc/hosts` file
     - You can also install [hey](https://github.com/rakyll/hey) to test for your circuit breaking
 
 
